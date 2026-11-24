@@ -30,7 +30,7 @@
   *{box-sizing:border-box;}
   html,body{
     margin:0; padding:0;
-    width:100vw; height:100vh;
+    width:100vw; height:100vh; height:100dvh;
     overflow:hidden;
     background:var(--navy);
     color:var(--cream);
@@ -112,6 +112,7 @@
     position:absolute;
     top:0; left:0;
     height:100vh;
+    height:100dvh;
     width:6800px;
     will-change:transform;
   }
@@ -479,6 +480,7 @@
     position:fixed; right:16px; bottom:16px; z-index:850;
     display:flex; gap:8px;
   }
+  .dpad-group{display:flex; gap:8px;}
   .pad-btn{
     background:rgba(26,26,46,0.92); color:var(--cream);
     border:3px solid var(--cream);
@@ -539,12 +541,132 @@
   @keyframes toastOut{0%,72%{opacity:1;}100%{opacity:0;}}
 
   @media (max-width:768px){
-    .brands-board{grid-template-columns:repeat(4, minmax(0, 1fr));}
-    .stage-card{flex:1 1 calc(50% - 10px); min-width:150px;}
-    .char-card{flex-direction:column; align-items:center; text-align:center; padding:18px;}
-    .avatar-frame{width:96px; height:96px;}
+    :root{ --ground-h:62px; }
+    .hud{
+      padding:7px 10px;
+      gap:6px 10px;
+      font-size:0.44rem;
+    }
+    .hud-left{
+      width:100%;
+      justify-content:space-between;
+      gap:6px;
+    }
+    .hud-action-btn{font-size:0.4rem; padding:3px 6px;}
+    .hud-nav{
+      width:100%;
+      flex-wrap:nowrap;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:none;
+      gap:6px;
+      padding-bottom:2px;
+    }
+    .hud-nav::-webkit-scrollbar{display:none;}
+    .hud-nav button{
+      flex:0 0 auto;
+      font-size:0.44rem;
+      padding:5px 7px;
+      background:rgba(15,15,35,0.65);
+      border:1px solid rgba(255,241,232,0.25);
+    }
+    .hud-nav button.active{
+      border-color:var(--gold);
+      background:rgba(255,210,63,0.14);
+    }
+
+    .zone{
+      top:76px;
+      bottom:calc(var(--ground-h) + 22px);
+      justify-content:flex-start;
+      padding-top:10px;
+    }
+    .zone-title{font-size:0.86rem; margin-bottom:4px;}
+    .zone-sub{font-size:0.95rem; margin-bottom:10px; line-height:1.25;}
+
+    .hero-zone{left:24px; width:calc(100vw - 48px); justify-content:center; padding-top:0;}
+    .kicker{font-size:0.52rem; margin-bottom:12px;}
+    .game-title{font-size:clamp(1.7rem, 9vw, 2.5rem); margin-bottom:12px;}
+    .player-tag{font-size:1.2rem;}
+    .hero-hinglish{font-size:0.86rem; margin-bottom:16px;}
+
+    .char-card{
+      flex-direction:column; align-items:center; text-align:center;
+      padding:16px 14px; gap:12px;
+      max-height:calc(100dvh - 210px);
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .avatar-frame{width:84px; height:84px; border-width:3px;}
+    .char-name{font-size:0.82rem;}
+    .char-class{font-size:0.98rem; margin-bottom:8px;}
+    .char-bio{font-size:0.8rem; line-height:1.5;}
+
+    .brands-board{
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      padding:10px; gap:6px;
+      max-height:calc(100dvh - 215px);
+      -webkit-overflow-scrolling:touch;
+    }
+    .brand-tile{padding:7px 4px; gap:4px;}
+    .brand-logo-wrap{width:28px; height:28px;}
+    .brand-name{font-size:0.6rem;}
+
+    .stages-grid{
+      max-height:calc(100dvh - 215px);
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      gap:8px;
+      padding-bottom:6px;
+    }
+    .stage-card{
+      flex:1 1 100%;
+      min-width:0;
+      padding:12px;
+      gap:4px;
+    }
+    .stage-card h3{font-size:0.56rem;}
+    .stage-card p{font-size:0.74rem;}
+
+    .trophy-grid{
+      grid-template-columns:1fr;
+      max-height:calc(100dvh - 215px);
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+      gap:10px;
+      padding-bottom:6px;
+    }
+    .trophy-card{padding:14px; gap:8px;}
+    .trophy-card h3{font-size:0.56rem;}
+    .trophy-card p{font-size:0.78rem;}
+
+    .contact-card{
+      padding:16px 14px;
+      max-height:calc(100dvh - 215px);
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .contact-actions{gap:8px; margin:12px 0 16px;}
+    .pixel-btn{font-size:0.54rem; padding:10px 12px;}
+    .social-row{font-size:0.56rem; gap:14px;}
+
+    #player{width:38px; height:51px;}
+    .thought-bubble{left:28px; bottom:58px; width:195px; font-size:0.4rem; padding:7px 9px;}
     .progress-bar-wrap{display:none;}
-    .thought-bubble{width:190px; font-size:0.4rem;}
+
+    /* Handheld-style split controls: D-pad left, Jump right */
+    .touch-pad{
+      left:12px; right:12px; bottom:10px;
+      justify-content:space-between;
+      pointer-events:none;
+    }
+    .touch-pad .pad-btn{
+      pointer-events:auto;
+      min-width:46px; min-height:42px;
+      padding:8px 14px;
+      font-size:0.62rem;
+    }
+    .touch-pad .dpad-group{display:flex; gap:8px; pointer-events:auto;}
   }
 </style>
 </head>
@@ -731,7 +853,7 @@
     <!-- PLAYER CHARACTER ON THE GROUND + THOUGHT BUBBLE -->
     <div id="player" aria-hidden="true">
       <div class="thought-bubble" id="thoughtBubble" title="Click to dismiss">
-        💭 Scroll wheel or ← → + SPACE to play!
+        💭 Swipe, scroll, or ← → + SPACE to play!
       </div>
       <svg viewBox="0 0 24 32" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
         <g class="sprite-head">
@@ -1268,8 +1390,10 @@
   <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
 </div>
 <div class="touch-pad">
-  <button class="pad-btn" id="btnLeft" type="button" aria-label="Walk left">◀</button>
-  <button class="pad-btn" id="btnRight" type="button" aria-label="Walk right">▶</button>
+  <div class="dpad-group">
+    <button class="pad-btn" id="btnLeft" type="button" aria-label="Walk left">◀</button>
+    <button class="pad-btn" id="btnRight" type="button" aria-label="Walk right">▶</button>
+  </div>
   <button class="pad-btn jump" id="btnJump" type="button" aria-label="Jump">▲</button>
 </div>
 
@@ -1756,6 +1880,44 @@
     else if (delta < 0) p.facing = -1;
   }, { passive:true });
 
+  // Touch swipe anywhere on the sky/ground to walk horizontally on mobile
+  var touchStartX = null, touchStartY = null, touchSwiping = false;
+  var viewportEl = document.getElementById('viewport');
+  if (viewportEl){
+    viewportEl.addEventListener('touchstart', function(e){
+      if (!backdrop.hidden || e.touches.length !== 1) return;
+      if (e.target && e.target.closest && e.target.closest('.brands-board, .char-card, .stages-grid, .trophy-grid, .contact-card, .touch-pad, .hud')) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchSwiping = true;
+    }, { passive:true });
+
+    viewportEl.addEventListener('touchmove', function(e){
+      if (!touchSwiping || touchStartX === null || e.touches.length !== 1) return;
+      var dx = touchStartX - e.touches[0].clientX;
+      var dy = touchStartY - e.touches[0].clientY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6){
+        dismissThought();
+        hideBrandTooltip();
+        warpTargetX = null;
+        p.vx = Math.max(-12, Math.min(12, dx * 0.25));
+        p.facing = dx > 0 ? 1 : -1;
+        touchStartX = e.touches[0].clientX;
+      }
+    }, { passive:true });
+
+    viewportEl.addEventListener('touchend', function(){
+      touchSwiping = false;
+      touchStartX = null;
+      touchStartY = null;
+    }, { passive:true });
+  }
+
+  // Tap outside brand tiles to close tooltip on mobile
+  document.addEventListener('touchstart', function(e){
+    if (e.target && e.target.closest && !e.target.closest('.brand-tile')) hideBrandTooltip();
+  }, { passive:true });
+
   // Touch buttons
   function bindBtn(id, key, isJump){
     var el = document.getElementById(id);
@@ -1775,7 +1937,8 @@
     btn.addEventListener('click', function(){
       sfx.click();
       dismissThought();
-      warpTargetX = parseInt(btn.getAttribute('data-warp'), 10) + 120;
+      var baseWarp = parseInt(btn.getAttribute('data-warp'), 10);
+      warpTargetX = baseWarp + (window.innerWidth <= 768 ? 40 : 120);
     });
   });
   document.getElementById('startBtn').addEventListener('click', function(){
@@ -1853,7 +2016,8 @@
 
     // Camera follow
     var viewW = window.innerWidth;
-    var targetCam = Math.max(0, Math.min(WORLD_W - viewW, p.x - viewW * 0.25));
+    var leadRatio = viewW <= 768 ? 0.14 : 0.25;
+    var targetCam = Math.max(0, Math.min(WORLD_W - viewW, p.x - viewW * leadRatio));
     camX += (targetCam - camX) * 0.14;
 
     world.style.transform = 'translate3d(' + (-Math.floor(camX)) + 'px, 0, 0)';
